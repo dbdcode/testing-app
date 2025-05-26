@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Camera App</title>
+    <link rel="stylesheet" href="camera.css">
+    <!-- Face API for person detection -->
+    <script src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@latest/dist/face-api.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Camera App</h1>
+          <div class="camera-section">
+            <div class="video-container">
+                <video id="video" autoplay muted playsinline></video>
+                <canvas id="overlay" style="position: absolute; pointer-events: none;"></canvas>
+            </div>
+            <canvas id="canvas" style="display: none;"></canvas>
+        </div>
+        
+        <div class="controls">
+            <button id="startBtn" class="btn btn-primary">Start Camera</button>
+            <button id="captureBtn" class="btn btn-secondary" disabled>Capture Photo</button>
+            <button id="stopBtn" class="btn btn-danger" disabled>Stop Camera</button>
+        </div>
+        
+        <div class="photo-section">
+            <h3>Captured Photos</h3>
+            <div id="photoGallery" class="photo-gallery"></div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const startBtn = document.getElementById('startBtn');
+        const captureBtn = document.getElementById('captureBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const photoGallery = document.getElementById('photoGallery');
+        
+        let stream = null;
+        let photoCount = 0;
+
+        // Start camera function
+        async function startCamera() {
+            try {
+                // Request camera access
+                stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    },
+                    audio: false 
+                });
+                
+                video.srcObject = stream;
+                
+                // Update button states
+                startBtn.disabled = true;
+                captureBtn.disabled = false;
+                stopBtn.disabled = false;
+                
+                console.log('Camera started successfully');
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+                alert('Error accessing camera: ' + error.message + 
+                      '\nMake sure you have a camera connected and grant permission when prompted.');
+            }
+        }
+
+        // Capture photo function
+        function capturePhoto() {
+            if (!stream) {
+                alert('Camera is not active');
+                return;
+            }
+
+            // Set canvas dimensions to match video
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            // Draw current video frame to canvas
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            // Convert canvas to image data URL
+            const dataURL = canvas.toDataURL('image/png');
+            
+            // Create photo element
+            const photoDiv = document.createElement('div');
+            photoDiv.className = 'photo-item';
+            
+            const img = document.createElement('img');
+            img.src = dataURL;
+            img.alt = `Captured photo ${++photoCount}`;
+            
+            const downloadBtn = document.createElement('button');
+            downloadBtn.textContent = 'Download';
+            downloadBtn.className = 'btn btn-small';
+            downloadBtn.onclick = () => downloadPhoto(dataURL, `photo_${photoCount}.png`);
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.className = 'btn btn-small btn-danger';
+            deleteBtn.onclick = () => photoDiv.remove();
+            
+            photoDiv.appendChild(img);
+            photoDiv.appendChild(downloadBtn);
+            photoDiv.appendChild(deleteBtn);
+            
+            // Add to gallery
+            photoGallery.appendChild(photoDiv);
+            
+            console.log('Photo captured');
+        }
+
+        // Download photo function
+        function downloadPhoto(dataURL, filename) {
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Stop camera function
+        function stopCamera() {
+            if (stream) {
+                // Stop all tracks
+                stream.getTracks().forEach(track => track.stop());
+                stream = null;
+                video.srcObject = null;
+                
+                // Update button states
+                startBtn.disabled = false;
+                captureBtn.disabled = true;
+                stopBtn.disabled = true;
+                
+                console.log('Camera stopped');
+            }
+        }
+
+        // Event listeners
+        startBtn.addEventListener('click', startCamera);
+        captureBtn.addEventListener('click', capturePhoto);
+        stopBtn.addEventListener('click', stopCamera);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Space' && !captureBtn.disabled) {
+                event.preventDefault();
+                capturePhoto();
+            }
+        });
+
+        // Handle page unload
+        window.addEventListener('beforeunload', () => {
+            if (stream) {
+                stopCamera();
+            }
+        });
+    </script>
+</body>
+</html>
