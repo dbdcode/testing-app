@@ -11,6 +11,11 @@
       background-color: #2196F3;
       color: white;
     }
+    #capture-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     #video, #canvas {
       border: 1px solid #ccc;
       margin: 10px;
@@ -19,11 +24,12 @@
 </head>
 <body>
   <h1>Take a Picture</h1>
-  <video id="video" width="320" height="240" autoplay></video>
+  <div id="capture-container">
+    <video id="video" width="320" height="240" autoplay></video>
+    <canvas id="canvas" width="320" height="240"></canvas>
+  </div>
   <br>
   <button id="snap">Take Photo</button>
-  <br>
-  <canvas id="canvas" width="320" height="240"></canvas>
   <script>
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
