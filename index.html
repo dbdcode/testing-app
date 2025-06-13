@@ -8,10 +8,20 @@
       font-family: Arial, sans-serif;
       text-align: center;
       margin-top: 40px;
+      background-color: lightblue; /* Set background color to lighter blue */
     }
     #video, #canvas {
       border: 1px solid #ccc;
       margin: 10px;
+    }
+    #gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    #gallery img {
+      margin: 5px;
+      border: 1px solid #ccc;
     }
   </style>
 </head>
@@ -22,10 +32,12 @@
   <button id="snap">Take Photo</button>
   <br>
   <canvas id="canvas" width="320" height="240"></canvas>
+  <div id="gallery" style="margin-top:20px;"></div>
   <script>
     const video = document.getElementById('video');
     const canvas = document.getElementById('canvas');
     const snapButton = document.getElementById('snap');
+    const gallery = document.getElementById('gallery');
 
     // Request access to the user's camera
     navigator.mediaDevices.getUserMedia({ video: true })
@@ -40,6 +52,14 @@
     snapButton.addEventListener('click', () => {
       const context = canvas.getContext('2d');
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      // Create a thumbnail and add to gallery
+      const img = document.createElement('img');
+      img.src = canvas.toDataURL('image/png');
+      img.width = 80;
+      img.height = 60;
+      img.style.margin = '5px';
+      img.style.border = '1px solid #ccc';
+      gallery.appendChild(img);
     });
   </script>
 </body>
