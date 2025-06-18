@@ -1,46 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Camera Capture</title>
+  <meta charset="utf-8" />
+  <title>Human Movement Tracker</title>
+  <!-- -------------- CSS -------------- -->
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 40px;
+    /* Reset + layout */
+    html,body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #222;
+      transition: background-color 0.3s ease;
+      font-family: system-ui, sans-serif;
     }
-    #video, #canvas {
-      border: 1px solid #ccc;
-      margin: 10px;
+
+    /* Video wrapper */
+    #videoContainer {
+      position: relative;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.4);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    video, canvas {
+      width: 640px; /* Adjust to make camera bigger/smaller */
+      height: 480px;
+      object-fit: cover;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none; /* keep clicks going to video */
     }
   </style>
 </head>
 <body>
-  <h1>Take a Picture</h1>
-  <video id="video" width="320" height="240" autoplay></video>
-  <br>
-  <button id="snap">Take Photo</button>
-  <br>
-  <canvas id="canvas" width="320" height="240"></canvas>
-  <script>
-    const video = document.getElementById('video');
-    const canvas = document.getElementById('canvas');
-    const snapButton = document.getElementById('snap');
+  <div id="videoContainer">
+    <video id="video" autoplay playsinline muted></video>
+    <canvas id="overlay"></canvas>
+  </div>
 
-    // Request access to the user's camera
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        video.srcObject = stream;
-      })
-      .catch(err => {
-        console.error('Could not access the camera: ', err);
+  <!-- -------------- JAVASCRIPT -------------- -->
+  <!-- TensorFlow.js & COCO‑SSD (person detector) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.16.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.2/dist/coco-ssd.min.js"></script>
+
+  <script>
+    const video   = document.getElementById('video');
+    const overlay = document.getElementById('overlay');
+    const ctx     = overlay.getContext('2d');
+
+    let model;
+    let lastChange = 0;
+
+    // Access the webcam and start detection
+    async function init() {
+      await setupCamera();
+      overlay.width  = video.videoWidth;
+      overlay.height = video.videoHeight;
+
+      model = await cocoSsd.load({ base: 'lite_mobilenet_v2' });
+      detectLoop();
+    }
+
+    // Request webcam stream
+    async function setupCamera() {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'user' },
+        audio: false
+      });
+      video.srcObject = stream;
+      return new Promise(res => (video.onloadedmetadata = res));
+    }
+
+    // Random HSL color helper
+    function randomColor() {
+      return `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`;
+    }
+
+    // Main detection loop
+    async function detectLoop() {
+      const preds = await model.detect(video);
+      ctx.clearRect(0, 0, overlay.width, overlay.height);
+
+      let personFound = false;
+      preds.forEach(p => {
+        if (p.class === 'person' && p.score > 0.6) {
+          personFound = true;
+          ctx.strokeStyle = '#00ff00';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(...p.bbox);
+        }
       });
 
-    // Capture a frame from the video and draw it to the canvas
-    snapButton.addEventListener('click', () => {
-      const context = canvas.getContext('2d');
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    });
+      // Change page background if a person is visible (debounced 500 ms)
+      if (personFound) {
+        const now = performance.now();
+        if (now - lastChange > 500) {
+          document.body.style.backgroundColor = randomColor();
+          lastChange = now;
+        }
+      }
+
+      requestAnimationFrame(detectLoop);
+    }
+
+    // Start everything
+    init();
   </script>
 </body>
 </html>
