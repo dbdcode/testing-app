@@ -1,0 +1,33 @@
+/* Reset + layout */
+html,body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #222;
+  transition: background-color 0.3s ease;
+  font-family: system-ui, sans-serif;
+}
+
+/* Video wrapper */
+#videoContainer {
+  position: relative;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.4);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+video, canvas {
+  width: 640px; /* Adjust to make camera bigger/smaller */
+  height: 480px;
+  object-fit: cover;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none; /* keep clicks going to video */
+}
