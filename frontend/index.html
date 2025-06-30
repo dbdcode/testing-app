@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClinicVision – AI Clinic Management Demo</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Navigation -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">ClinicVision</div>
+      <nav>
+        <a href="#prep">Preparation</a>
+        <a href="#present">Presentation</a>
+        <a href="#features">Capabilities</a>
+        <a href="#value">Value</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section id="hero" class="hero">
+      <h1>Transform Your Clinic with<br>AI‑Integrated Medical Surveillance</h1>
+      <p>Automate check‑ins, monitor patients in real‑time, and give your staff back precious hours every day.</p>
+      <button class="cta" onclick="scrollToSection('prep')">Get Started</button>
+    </section>
+
+    <!-- Preparation -->
+    <section id="prep">
+      <h2 class="section-title"><span class="lucide" data-icon="clipboard-check"></span>Preparation Phase</h2>
+      <div class="section-grid">
+        <div class="card">
+          <div class="card-icon"><span class="lucide" data-icon="activity"></span></div>
+          <h3>Facility Analysis</h3>
+          <p>Map patient flow, locate bottlenecks, and quantify manual hours to uncover up to <strong>40% wasted time</strong>.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><span class="lucide" data-icon="users"></span></div>
+          <h3>Stakeholder Engagement</h3>
+          <p>Identify decision‑makers, tailor ROI‑driven outreach, and schedule a quick discovery call.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Presentation -->
+    <section id="present">
+      <h2 class="section-title"><span class="lucide" data-icon="presentation"></span>Presentation Phase</h2>
+      <div class="section-grid">
+        <div class="card">
+          <div class="card-icon"><span class="lucide" data-icon="alert-triangle"></span></div>
+          <h3>Problem Statement</h3>
+          <p>Manual check‑ins, data errors, and staff burnout cost clinics revenue and morale.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><span class="lucide" data-icon="rocket"></span></div>
+          <h3>AI‑Powered Solution</h3>
+          <p>Computer vision instantly recognizes patients, triggers workflows, and secures data — so staff focus on care.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features">
+      <h2 class="section-title"><span class="lucide" data-icon="cpu"></span>Core Capabilities</h2>
+      <div class="section-grid">
+        <div class="card">
+          <div class="card-icon"><span class="lucide" data-icon="scan-face"></span></div>
+          <h3>Smart Recognition</h3>
+          <p>99.9% accurate face ID even with masks: retrieve history in milliseconds.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><span class="lucide" data-icon="scan"></span></div>
+          <h3>Zero‑Touch Check‑In</h3>
+          <p>Seamless entry flows integrate directly with EMR or Google Sheets.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><span class="lucide" data-icon="monitor"></span></div>
+          <h3>Intelligent Monitoring</h3>
+          <p>Track multiple patients at once, trigger treatment plans, and store events securely.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><span class="lucide" data-icon="shield"></span></div>
+          <h3>Enterprise‑Grade Security</h3>
+          <p>HIPAA‑compliant encryption, role‑based access, and regular audits built‑in.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Value -->
+    <section id="value">
+      <h2 class="section-title"><span class="lucide" data-icon="trending-up"></span>Value Proposition</h2>
+      <div class="section-grid">
+        <div class="card">
+          <div class="card-icon"><span class="lucide" data-icon="clock"></span></div>
+          <h3>95% Faster Check‑Ins</h3>
+          <p>Cut patient intake from 5‑10 minutes to under 30 seconds.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><span class="lucide" data-icon="users-2"></span></div>
+          <h3>50% Staff Cost Savings</h3>
+          <p>Automate repetitive tasks so one assistant can do the work of three.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><span class="lucide" data-icon="bar-chart"></span></div>
+          <h3>Near‑Perfect Records</h3>
+          <p>Reduce data entry errors by 99% thanks to automated logging.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><span class="lucide" data-icon="dollar-sign"></span></div>
+          <h3>Rapid ROI</h3>
+          <p>Typical payback period under 4&nbsp;months from go‑live.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- External JS -->
+  <script src="scripts.js"></script>
+</body>
+</html>
