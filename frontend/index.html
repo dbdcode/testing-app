@@ -1,125 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClinicVision – AI Clinic Management Demo</title>
-
-  <!-- Fonts & Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- External CSS -->
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Pose Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(-45deg, #1a202c, #2d3748, #4a5568, #2d3748);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .input_video {
+            display: none;
+        }
+        .output_canvas {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+        }
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); /* focus:ring-blue-500 */
+        }
+    </style>
 </head>
-<body>
-  <!-- Navigation -->
-  <header>
-    <div class="nav-container">
-      <div class="logo">ClinicVision</div>
+<body class="gradient-bg text-white min-h-screen flex items-center justify-center">
+
+    <!-- Launch Page Section -->
+    <div id="launchPage" class="text-center p-8 max-w-2xl mx-auto">
+        <header>
+            <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tight">
+                Real-Time Pose Tracker
+            </h1>
+        </header>
+        <main>
+            <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-xl mx-auto">
+                Experience the future of motion tracking. Our application uses your webcam and advanced AI to detect and visualize your body's movements in real-time.
+            </p>
+            <button id="launchButton"
+               class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full text-xl transition-transform transform hover:scale-105 duration-300 shadow-lg">
+                Launch Tracker
+            </button>
+        </main>
+        <footer class="mt-16 text-gray-500">
+            <p>Click "Launch Tracker" to begin. You will be asked for camera permission.</p>
+        </footer>
     </div>
-  </header>
 
-  <main>
-    <!-- Hero -->
-    <section id="hero" class="hero">
-      <h1>Transform Your Clinic with<br>AI‑Integrated Medical Surveillance</h1>
-      <p>Automate check‑ins, monitor patients in real‑time, and give your staff back precious hours every day.</p>
-      <button class="cta" onclick="scrollToSection('prep')">Get Started</button>
-    </section>
+    <!-- Tracker App Section (Initially Hidden) -->
+    <div id="trackerPage" class="hidden w-full max-w-5xl mx-auto p-4">
+        <div class="bg-gray-800 p-4 rounded-lg shadow-lg">
+            <!-- Video and Canvas Container -->
+            <div class="relative">
+                <video class="input_video"></video>
+                <canvas class="output_canvas" width="1280px" height="720px"></canvas>
+                 <!-- Loading Spinner -->
+                <div id="loading" class="absolute top-0 left-0 w-full h-full bg-gray-900 bg-opacity-75 flex justify-center items-center rounded-lg hidden">
+                    <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-32 w-32 animate-spin"></div>
+                </div>
+            </div>
 
-    <!-- Preparation -->
-    <section id="prep">
-      <h2 class="section-title"><span class="lucide" data-icon="clipboard-check"></span>Preparation Phase</h2>
-      <div class="section-grid">
-        <div class="card">
-          <div class="card-icon"><span class="lucide" data-icon="activity"></span></div>
-          <h3>Facility Analysis</h3>
-          <p>Map patient flow, locate bottlenecks, and quantify manual hours to uncover up to <strong>40% wasted time</strong>.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon"><span class="lucide" data-icon="users"></span></div>
-          <h3>Stakeholder Engagement</h3>
-          <p>Identify decision‑makers, tailor ROI‑driven outreach, and schedule a quick discovery call.</p>
-        </div>
-      </div>
-    </section>
+            <!-- User Input Text Box -->
+            <textarea id="inputTextBox"
+                      class="mt-4 p-4 w-full bg-gray-900 rounded-lg text-gray-300 border border-gray-700 transition"
+                      rows="3"
+                      placeholder="Type something and press Enter..."></textarea>
 
-    <!-- Presentation -->
-    <section id="present">
-      <h2 class="section-title"><span class="lucide" data-icon="presentation"></span>Presentation Phase</h2>
-      <div class="section-grid">
-        <div class="card">
-          <div class="card-icon"><span class="lucide" data-icon="alert-triangle"></span></div>
-          <h3>Problem Statement</h3>
-          <p>Manual check‑ins, data errors, and staff burnout cost clinics revenue and morale.</p>
+            <!-- Controls -->
+            <div class="flex justify-center items-center space-x-4 mt-4">
+                <button id="backButton" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                    Back to Home
+                </button>
+                <button id="startButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                    Start Tracking
+                </button>
+                <button id="stopButton" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300" disabled>
+                    Stop Tracking
+                </button>
+            </div>
         </div>
-        <div class="card">
-          <div class="card-icon"><span class="lucide" data-icon="rocket"></span></div>
-          <h3>AI‑Powered Solution</h3>
-          <p>Computer vision instantly recognizes patients, triggers workflows, and secures data — so staff focus on care.</p>
-        </div>
-      </div>
-    </section>
+    </div>
 
-    <!-- Features -->
-    <section id="features">
-      <h2 class="section-title"><span class="lucide" data-icon="cpu"></span>Core Capabilities</h2>
-      <div class="section-grid">
-        <div class="card">
-          <div class="card-icon"><span class="lucide" data-icon="scan-face"></span></div>
-          <h3>Smart Recognition</h3>
-          <p>99.9% accurate face ID even with masks: retrieve history in milliseconds.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon"><span class="lucide" data-icon="scan"></span></div>
-          <h3>Zero‑Touch Check‑In</h3>
-          <p>Seamless entry flows integrate directly with EMR or Google Sheets.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon"><span class="lucide" data-icon="monitor"></span></div>
-          <h3>Intelligent Monitoring</h3>
-          <p>Track multiple patients at once, trigger treatment plans, and store events securely.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon"><span class="lucide" data-icon="shield"></span></div>
-          <h3>Enterprise‑Grade Security</h3>
-          <p>HIPAA‑compliant encryption, role‑based access, and regular audits built‑in.</p>
-        </div>
-      </div>
-    </section>
 
-    <!-- Value -->
-    <section id="value">
-      <h2 class="section-title"><span class="lucide" data-icon="trending-up"></span>Value Proposition</h2>
-      <div class="section-grid">
-        <div class="card">
-          <div class="card-icon"><span class="lucide" data-icon="clock"></span></div>
-          <h3>95% Faster Check‑Ins</h3>
-          <p>Cut patient intake from 5‑10 minutes to under 30 seconds.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon"><span class="lucide" data-icon="users-2"></span></div>
-          <h3>50% Staff Cost Savings</h3>
-          <p>Automate repetitive tasks so one assistant can do the work of three.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon"><span class="lucide" data-icon="bar-chart"></span></div>
-          <h3>Near‑Perfect Records</h3>
-          <p>Reduce data entry errors by 99% thanks to automated logging.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon"><span class="lucide" data-icon="dollar-sign"></span></div>
-          <h3>Rapid ROI</h3>
-          <p>Typical payback period under 4&nbsp;months from go‑live.</p>
-        </div>
-      </div>
-    </section>
-  </main>
+    <script type="module">
+        // --- Page Navigation Elements ---
+        const launchPage = document.getElementById('launchPage');
+        const trackerPage = document.getElementById('trackerPage');
+        const launchButton = document.getElementById('launchButton');
+        const backButton = document.getElementById('backButton');
 
-  <!-- External JS -->
-  <script src="scripts.js"></script>
+        // --- Pose Tracker Elements ---
+        const videoElement = document.getElementsByClassName('input_video')[0];
+        const canvasElement = document.getElementsByClassName('output_canvas')[0];
+        const canvasCtx = canvasElement.getContext('2d');
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const loadingElement = document.getElementById('loading');
+        const inputTextBox = document.getElementById('inputTextBox');
+
+        let camera = null;
+        let pose = null;
+        let displayText = '';
+        let displayTextTimeout = null;
+
+        // --- Page Navigation Logic ---
+        launchButton.addEventListener('click', () => {
+            launchPage.classList.add('hidden');
+            trackerPage.classList.remove('hidden');
+            document.body.classList.remove('gradient-bg', 'flex', 'items-center', 'justify-center');
+            document.body.classList.add('bg-gray-900');
+        });
+
+        backButton.addEventListener('click', () => {
+            stopTracking(); // Ensure camera is off when going back
+            trackerPage.classList.add('hidden');
+            launchPage.classList.remove('hidden');
+            document.body.classList.add('gradient-bg', 'flex', 'items-center', 'justify-center');
+            document.body.classList.remove('bg-gray-900');
+        });
+
+
+        // --- Pose Tracker Logic ---
+
+        // Function to handle pose results
+        function onResults(results) {
+            canvasCtx.save();
+            canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+
+            if (results.poseLandmarks) {
+                // Draw skeleton
+                drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS, { color: '#00FF00', lineWidth: 4 });
+
+                // Draw keypoints
+                drawLandmarks(canvasCtx, [results.poseLandmarks[0]], { color: '#FF0000', radius: 5 }); // Head
+                drawLandmarks(canvasCtx, [results.poseLandmarks[15], results.poseLandmarks[16]], { color: '#0000FF', radius: 5 }); // Hands
+                drawLandmarks(canvasCtx, [results.poseLandmarks[23], results.poseLandmarks[24]], { color: '#FFFF00', radius: 5 }); // Waist/Hips
+            }
+            
+            // Draw the user's text if it exists
+            if (displayText) {
+                canvasCtx.fillStyle = 'white';
+                canvasCtx.strokeStyle = 'black';
+                canvasCtx.lineWidth = 5;
+                canvasCtx.font = 'bold 70px Inter';
+                canvasCtx.textAlign = 'center';
+
+                const x = canvasElement.width / 2;
+                const y = canvasElement.height - 60; // Position at the bottom
+
+                // Draw outlined text for better visibility
+                canvasCtx.strokeText(displayText, x, y);
+                canvasCtx.fillText(displayText, x, y);
+            }
+
+            canvasCtx.restore();
+        }
+
+        // Initialize Pose model
+        function initializePose() {
+            pose = new Pose({
+                locateFile: (file) => {
+                    return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
+                }
+            });
+
+            pose.setOptions({
+                modelComplexity: 1,
+                smoothLandmarks: true,
+                enableSegmentation: false,
+                smoothSegmentation: false,
+                minDetectionConfidence: 0.5,
+                minTrackingConfidence: 0.5
+            });
+
+            pose.onResults(onResults);
+        }
+
+        // Start camera and tracking
+        async function startTracking() {
+            loadingElement.classList.remove('hidden');
+            startButton.disabled = true;
+            backButton.disabled = true;
+
+            if (!pose) {
+                initializePose();
+            }
+
+            camera = new Camera(videoElement, {
+                onFrame: async () => {
+                    await pose.send({ image: videoElement });
+                },
+                width: 1280,
+                height: 720
+            });
+
+            try {
+                await camera.start();
+                loadingElement.classList.add('hidden');
+                stopButton.disabled = false;
+                backButton.disabled = false;
+            } catch (error) {
+                console.error("Failed to start camera:", error);
+                loadingElement.classList.add('hidden');
+                startButton.disabled = false;
+                backButton.disabled = false;
+                const modal = document.createElement('div');
+                modal.innerHTML = `<div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+                    <div style="background: #2d3748; color: white; padding: 2rem; border-radius: 0.5rem; text-align: center;">
+                        <p>Could not start the camera. Please grant permission and ensure it's not in use.</p>
+                        <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #4a5568; border-radius: 0.25rem;">OK</button>
+                    </div>
+                </div>`;
+                document.body.appendChild(modal);
+            }
+        }
+
+        // Stop camera and tracking
+        function stopTracking() {
+            if (camera) {
+                camera.stop();
+                camera = null;
+            }
+            // Clear the canvas and any displayed text
+            if (displayTextTimeout) clearTimeout(displayTextTimeout);
+            displayText = '';
+            canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            startButton.disabled = false;
+            stopButton.disabled = true;
+        }
+
+        // --- Event Listeners ---
+        startButton.addEventListener('click', startTracking);
+        stopButton.addEventListener('click', stopTracking);
+        
+        // Listen for Enter key in the text box
+        inputTextBox.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && inputTextBox.value.trim() !== '') {
+                event.preventDefault(); // Prevents adding a new line in the textarea
+                displayText = inputTextBox.value;
+                inputTextBox.value = ''; // Clear the input box
+
+                // Clear any previous timeout to reset the timer
+                if (displayTextTimeout) {
+                    clearTimeout(displayTextTimeout);
+                }
+
+                // Set the text to disappear after 5 seconds
+                displayTextTimeout = setTimeout(() => {
+                    displayText = '';
+                }, 5000);
+            }
+        });
+
+        // Clean up on page leave
+        window.addEventListener('beforeunload', () => {
+            if (camera) {
+                camera.stop();
+            }
+        });
+    </script>
 </body>
 </html>
