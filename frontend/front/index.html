@@ -15,7 +15,7 @@
 <body class="bg-gray-900 text-white min-h-screen">
 
     <!-- Cinematic Slideshow Background -->
-    <div class="slideshow-container" aria-hidden="true">
+    <div id="slideshow-container" class="slideshow-container" aria-hidden="true">
         <div class="slideshow-overlay"></div>
         <div class="slideshow-wrapper">
             <div class="slideshow-slide active" data-slide="1">
@@ -186,8 +186,8 @@
         </div>
 
         <!-- Tracker App Page -->
-        <div id="tracker" class="page w-full max-w-5xl mx-auto p-4">
-            <div class="bg-gray-800 bg-opacity-90 backdrop-blur p-4 rounded-lg shadow-lg">
+        <div id="tracker" class="page w-full max-w-5xl mx-auto p-4" style="background: linear-gradient(135deg, #172554 0%, #1e293b 100%); border-radius: 1rem; box-shadow: 0 4px 32px rgba(16,30,54,0.2);">
+            <div class="p-4">
                 <div class="relative">
                     <video class="input_video"></video>
                     <canvas class="output_canvas" width="1280px" height="720px"></canvas>
@@ -216,6 +216,26 @@
     </footer>
 
     <script src="scripts.js" type="module"></script>
+<script>
+// Hide slideshow background on tracker page
+function toggleSlideshowForTracker() {
+  const slideshow = document.getElementById('slideshow-container');
+  const trackerPage = document.getElementById('tracker');
+  if (trackerPage && trackerPage.classList.contains('active')) {
+    slideshow.style.display = 'none';
+  } else {
+    slideshow.style.display = '';
+  }
+}
+
+// Listen for navigation changes
+const navLinks = document.querySelectorAll('.nav-link');
+navLinks.forEach(link => {
+  link.addEventListener('click', () => setTimeout(toggleSlideshowForTracker, 10));
+});
+// Also run on load
+window.addEventListener('DOMContentLoaded', toggleSlideshowForTracker);
+</script>
 </body>
 </html>
 

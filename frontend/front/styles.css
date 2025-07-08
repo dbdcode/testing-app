@@ -129,6 +129,13 @@ main {
     width: 100%;
     height: auto;
     border-radius: 0.5rem;
+    background: transparent;
+    box-shadow: none;
+}
+
+.input_video {
+    display: none;
+    background: transparent;
 }
 .page { display: none; }
 .page.active { display: block; }
