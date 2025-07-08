@@ -40,26 +40,76 @@
 </head>
 <body class="gradient-bg text-white min-h-screen flex items-center justify-center">
 
-    <!-- Launch Page Section -->
-    <div id="launchPage" class="text-center p-8 max-w-2xl mx-auto">
-        <header>
-            <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tight">
-                Real-Time Pose Tracker
+    <!-- Info/Landing Page Section -->
+    <div id="launchPage" class="text-center p-8 max-w-3xl mx-auto">
+        <header class="mb-8">
+            <h1 class="text-4xl md:text-6xl font-black mb-2 tracking-tight">
+                🏥 AI-Integrated Medical Surveillance Systems
             </h1>
+            <h2 class="text-xl md:text-2xl font-semibold text-blue-300 mb-4">
+                Transform Your Clinic with Intelligent Patient Management
+            </h2>
         </header>
 
-        <main>
-            <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-xl mx-auto">
-                Experience the future of motion tracking. Our application uses your webcam and advanced AI to detect and visualize your body's movements in real-time.
-            </p>
-            <button id="launchButton"
-               class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full text-xl transition-transform transform hover:scale-105 duration-300 shadow-lg">
-                Launch Tracker
-            </button>
+        <main class="space-y-8">
+            <section class="bg-gray-800 bg-opacity-80 rounded-lg p-6 shadow-lg">
+                <h3 class="text-2xl font-bold mb-2 text-blue-400">Why Choose Us?</h3>
+                <ul class="text-left text-gray-200 space-y-2">
+                    <li>✅ <b>Save 40% of staff time</b> by automating manual processes</li>
+                    <li>✅ <b>AI facial recognition</b> for instant, secure patient check-in</li>
+                    <li>✅ <b>Real-time monitoring</b> and compliance alerts</li>
+                    <li>✅ <b>Seamless EMR integration</b> and HIPAA-compliant security</li>
+                    <li>✅ <b>Measurable ROI</b>: 95% faster check-ins, 87% less wait time</li>
+                </ul>
+            </section>
+
+            <section class="bg-gray-800 bg-opacity-80 rounded-lg p-6 shadow-lg">
+                <h3 class="text-2xl font-bold mb-2 text-blue-400">How It Works</h3>
+                <ol class="text-left text-gray-200 space-y-1 list-decimal list-inside">
+                    <li><b>Preparation:</b> Analyze your clinic's workflow and identify bottlenecks</li>
+                    <li><b>Engagement:</b> Connect with stakeholders and tailor the solution</li>
+                    <li><b>Presentation:</b> Demonstrate real-world impact and live AI tracking</li>
+                    <li><b>Pilot:</b> Quick setup, live trial, and measurable results in weeks</li>
+                </ol>
+            </section>
+
+            <section class="bg-gray-800 bg-opacity-80 rounded-lg p-6 shadow-lg">
+                <h3 class="text-2xl font-bold mb-2 text-blue-400">Key Features</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left text-gray-200">
+                    <div>
+                        <ul class="space-y-1">
+                            <li>🔐 <b>Smart Patient Recognition</b></li>
+                            <li>☁️ <b>Automated Check-In</b></li>
+                            <li>📊 <b>Intelligent Monitoring</b></li>
+                            <li>🛡️ <b>Enterprise Security</b></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="space-y-1">
+                            <li>🎤 <b>Voice Recognition (optional)</b></li>
+                            <li>⌚ <b>Wearable Integration</b></li>
+                            <li>🤖 <b>Predictive Analytics</b></li>
+                            <li>📱 <b>Mobile Apps</b></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-gray-800 bg-opacity-80 rounded-lg p-6 shadow-lg">
+                <h3 class="text-2xl font-bold mb-2 text-blue-400">Ready to Transform Your Clinic?</h3>
+                <p class="text-gray-200 mb-4">
+                    Schedule a personalized demo, start a risk-free pilot, and join the future of healthcare. <br>
+                    <span class="italic text-blue-200">"Don't just manage patients—delight them with efficiency."</span>
+                </p>
+                <button id="launchButton"
+                    class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-full text-xl transition-transform transform hover:scale-105 duration-300 shadow-lg">
+                    Get Started
+                </button>
+            </section>
         </main>
 
-        <footer class="mt-16 text-gray-500">
-            <p>Click "Launch Tracker" to begin. You will be asked for camera permission.</p>
+        <footer class="mt-12 text-gray-500 text-sm">
+            &copy; 2024 AI-Integrated Medical Surveillance Systems. All rights reserved.
         </footer>
     </div>
 
