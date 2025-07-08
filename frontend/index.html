@@ -41,23 +41,101 @@
 <body class="gradient-bg text-white min-h-screen flex items-center justify-center">
 
     <!-- Launch Page Section -->
-    <div id="launchPage" class="text-center p-8 max-w-2xl mx-auto">
-        <header>
-            <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tight">
-                Real-Time Pose Tracker
-            </h1>
+    <div id="launchPage" class="text-center p-8 max-w-4xl mx-auto">
+        <header class="mb-8">
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight">AI-Integrated Medical Surveillance Systems</h1>
+            <p class="text-lg md:text-xl text-gray-300 mt-4">Transform Your Clinic with Intelligent Patient Management</p>
         </header>
+
         <main>
-            <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-xl mx-auto">
-                Experience the future of motion tracking. Our application uses your webcam and advanced AI to detect and visualize your body's movements in real-time.
-            </p>
-            <button id="launchButton"
-               class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full text-xl transition-transform transform hover:scale-105 duration-300 shadow-lg">
-                Launch Tracker
+            <div class="my-8 text-left p-6 bg-gray-800 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold mb-6 text-blue-400 border-b border-gray-700 pb-2">Core Capabilities</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold">🔐 Smart Patient Recognition</h3>
+                        <ul class="list-disc list-inside mt-2 text-gray-300">
+                            <li>AI facial recognition with 99.9% accuracy</li>
+                            <li>Works with masks and changing appearances</li>
+                            <li>Instant patient history retrieval</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold">☁️ Automated Check-In System</h3>
+                        <ul class="list-disc list-inside mt-2 text-gray-300">
+                            <li>Zero-touch entry process</li>
+                            <li>Direct integration with EMR/Google Sheets</li>
+                            <li>Real-time attendance tracking</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold">📊 Intelligent Monitoring</h3>
+                        <ul class="list-disc list-inside mt-2 text-gray-300">
+                            <li>Track multiple patients simultaneously</li>
+                            <li>Personalized treatment plan activation</li>
+                            <li>Compliance monitoring and alerts</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold">🛡️ Enterprise Security</h3>
+                        <ul class="list-disc list-inside mt-2 text-gray-300">
+                            <li>HIPAA-compliant encryption</li>
+                            <li>Secure cloud storage</li>
+                            <li>Role-based access control</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="my-8 text-left p-6 bg-gray-800 rounded-lg shadow-lg">
+                <h2 class="text-3xl font-bold mb-6 text-blue-400 border-b border-gray-700 pb-2">Measurable Benefits</h2>
+                <p class="text-gray-400 mb-4">See the impact of our AI-powered platform.</p>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm text-left text-gray-400">
+                        <thead class="text-xs text-gray-300 uppercase bg-gray-700">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">Metric</th>
+                                <th scope="col" class="px-6 py-3">Before</th>
+                                <th scope="col" class="px-6 py-3">After</th>
+                                <th scope="col" class="px-6 py-3">Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-gray-800 border-b border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Check-in Time</th>
+                                <td class="px-6 py-4">5-10 min</td>
+                                <td class="px-6 py-4">&lt;30 sec</td>
+                                <td class="px-6 py-4 text-green-400">⬇️ 95% reduction</td>
+                            </tr>
+                            <tr class="bg-gray-800 border-b border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Staff Required</th>
+                                <td class="px-6 py-4">2-3</td>
+                                <td class="px-6 py-4">1</td>
+                                <td class="px-6 py-4 text-green-400">💰 50% cost savings</td>
+                            </tr>
+                            <tr class="bg-gray-800 border-b border-gray-700">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Patient Wait Time</th>
+                                <td class="px-6 py-4">15 min</td>
+                                <td class="px-6 py-4">2 min</td>
+                                <td class="px-6 py-4 text-green-400">😊 87% improvement</td>
+                            </tr>
+                            <tr class="bg-gray-800">
+                                <th scope="row" class="px-6 py-4 font-medium text-white whitespace-nowrap">Data Accuracy</th>
+                                <td class="px-6 py-4">85%</td>
+                                <td class="px-6 py-4">99.9%</td>
+                                <td class="px-6 py-4 text-green-400">✅ Near-perfect records</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <button id="launchButton" class="mt-8 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full text-xl transition-transform transform hover:scale-105 duration-300 shadow-lg">
+                Get Started
             </button>
         </main>
+
         <footer class="mt-16 text-gray-500">
-            <p>Click "Launch Tracker" to begin. You will be asked for camera permission.</p>
+            <p>Click "Get Started" to experience the live demo. You will be asked for camera permission.</p>
         </footer>
     </div>
 
