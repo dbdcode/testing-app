@@ -3,7 +3,7 @@ class CinematicSlideshow {
     constructor() {
         this.slides = document.querySelectorAll('.slideshow-slide');
         this.currentSlide = 0;
-        this.slideInterval = 7000; // 7 seconds per slide
+        this.slideInterval = 3000; // 3 seconds per slide
         this.isTransitioning = false;
         
         // Preload images for smooth transitions
@@ -83,6 +83,12 @@ navLinks.forEach(link => {
 
 getStartedBtn.addEventListener('click', () => showPage('tracker'));
 showPage('home');
+
+// Email Support Form Navigation
+const emailSupportBtn = document.getElementById('emailSupportBtn');
+const backToSupportBtn = document.getElementById('backToSupportBtn');
+if (emailSupportBtn) emailSupportBtn.addEventListener('click', () => showPage('emailSupport'));
+if (backToSupportBtn) backToSupportBtn.addEventListener('click', () => showPage('support'));
 
 // --- Original Tracking Logic ---
 const videoElement = document.getElementsByClassName('input_video')[0];
