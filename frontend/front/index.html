@@ -80,6 +80,7 @@
             <div class="space-x-2 md:space-x-4 text-lg">
                 <button data-page="home" class="nav-link text-gray-300">Home</button>
                 <button data-page="about" class="nav-link text-gray-300">About</button>
+                <button data-page="virtual-demo" class="nav-link text-gray-300 pulse-glow">Try Demo</button>
                 <button data-page="support" class="nav-link text-gray-300">Support</button>
                 <button data-page="demo" class="nav-link text-gray-300">Book&nbsp;a&nbsp;Demo</button>
                 <button data-page="tracker" class="nav-link text-gray-300">Tracker</button>
@@ -105,10 +106,14 @@
                             Our computer vision-based platform thinks, tracks, and manages—so your staff can focus on what truly matters: patient care.
                         </p>
                     </header>
-                    <button id="getStartedBtn"
-                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-full text-xl transition-all transform hover:scale-105 duration-300 shadow-2xl animate-pulse-subtle">
-                        Launch the Tracker
-                    </button>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button id="tryDemoBtn" class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-10 rounded-full text-xl transition-all transform hover:scale-105 duration-300 shadow-2xl animate-pulse-subtle">
+                            Try Virtual Demo
+                        </button>
+                        <button id="getStartedBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-full text-xl transition-all transform hover:scale-105 duration-300 shadow-2xl">
+                            Launch the Tracker
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="bg-gray-900 bg-opacity-95 py-12 px-6 relative z-10">
@@ -117,8 +122,8 @@
                         <h3 class="text-2xl font-bold mb-3 text-blue-400">The Problem</h3>
                         <ul class="text-left text-gray-300 space-y-2">
                             <li><span class="font-bold text-red-400">⏱ Time Loss:</span> 5-10 minutes per patient on manual check-ins.</li>
-                            <li><span class="font-bold text-red-400">🚨 Error Rate:</span> 15% data entry mistakes lead to complications.</li>
-                            <li><span class="font-bold text-red-400">😔 Staff Burnout:</span> Repetitive administrative tasks drain morale.</li>
+                            <li><span class="font-bold text-red-400">❌ Error Rate:</span> 15% data entry mistakes lead to complications.</li>
+                            <li><span class="font-bold text-red-400">😩 Staff Burnout:</span> Repetitive administrative tasks drain morale.</li>
                             <li><span class="font-bold text-red-400">💸 Hidden Costs:</span> Inefficiency results in lost revenue and patient dissatisfaction.</li>
                         </ul>
                     </div>
@@ -179,7 +184,7 @@
                                     <td class="py-3 px-4 text-gray-300">Check-in Time</td>
                                     <td class="py-3 px-4 text-gray-300">5-10 min</td>
                                     <td class="py-3 px-4 text-gray-300">&lt;30 sec</td>
-                                    <td class="py-3 px-4 text-green-300">⬇️ 95% reduction</td>
+                                    <td class="py-3 px-4 text-green-300">⚡️ 95% reduction</td>
                                 </tr>
                                 <tr class="border-b border-gray-700">
                                     <td class="py-3 px-4 text-gray-300">Staff Required</td>
@@ -191,7 +196,7 @@
                                     <td class="py-3 px-4 text-gray-300">Patient Wait Time</td>
                                     <td class="py-3 px-4 text-gray-300">15 min</td>
                                     <td class="py-3 px-4 text-gray-300">2 min</td>
-                                    <td class="py-3 px-4 text-green-300">😊 87% improvement</td>
+                                    <td class="py-3 px-4 text-green-300">😄 87% improvement</td>
                                 </tr>
                                 <tr>
                                     <td class="py-3 px-4 text-gray-300">Data Accuracy</td>
@@ -201,6 +206,129 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Virtual Demo Page -->
+        <div id="virtual-demo" class="page p-6 md:p-12 max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-8 text-blue-400 animate-fadeInUp">Experience the Difference</h2>
+            <p class="text-center text-gray-300 mb-8 text-lg">Try our interactive demo to see how AI transforms patient check-in</p>
+            
+            <!-- Demo Container -->
+            <div class="demo-container bg-gray-800 rounded-2xl p-8 shadow-2xl">
+                <!-- Demo Controls -->
+                <div class="demo-controls mb-8 text-center">
+                    <button id="startDemoBtn" class="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-all transform hover:scale-105 duration-300 shadow-lg">
+                        Start Demo Experience
+                    </button>
+                    <button id="resetDemoBtn" class="ml-4 bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 hidden">
+                        Reset Demo
+                    </button>
+                </div>
+
+                <!-- Scenario Selector -->
+                <div class="scenario-selector mb-8 hidden">
+                    <div class="flex justify-center gap-4">
+                        <button id="beforeScenarioBtn" class="scenario-btn bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-300">
+                            Manual Process (Before)
+                        </button>
+                        <button id="afterScenarioBtn" class="scenario-btn bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-300">
+                            AI-Powered (After)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Demo Visualization Area -->
+                <div class="demo-visualization grid md:grid-cols-2 gap-8">
+                    <!-- Left Panel - Virtual Reception -->
+                    <div class="reception-area bg-gray-900 rounded-lg p-6 relative overflow-hidden">
+                        <h3 class="text-xl font-bold mb-4 text-center">Virtual Reception</h3>
+                        
+                        <!-- Virtual Patient -->
+                        <div id="virtualPatient" class="virtual-patient hidden">
+                            <div class="patient-avatar mx-auto mb-4">
+                                <svg width="120" height="120" viewBox="0 0 120 120" class="mx-auto">
+                                    <circle cx="60" cy="60" r="50" fill="#4B5563"/>
+                                    <circle cx="60" cy="45" r="20" fill="#9CA3AF"/>
+                                    <path d="M 30 85 Q 60 70 90 85" fill="#9CA3AF"/>
+                                    <circle cx="45" cy="45" r="3" fill="#1F2937"/>
+                                    <circle cx="75" cy="45" r="3" fill="#1F2937"/>
+                                    <path d="M 50 60 Q 60 65 70 60" stroke="#1F2937" stroke-width="2" fill="none"/>
+                                </svg>
+                                <p class="text-center mt-2 text-gray-400">Patient: John Doe</p>
+                            </div>
+                        </div>
+
+                        <!-- Reception Desk -->
+                        <div class="reception-desk bg-gray-800 rounded p-4 mt-4">
+                            <div class="desk-screen bg-gray-700 rounded p-2 mb-2 h-32 relative">
+                                <div id="deskDisplay" class="text-sm text-gray-300 p-2">
+                                    <p class="animate-typewriter">Reception System Ready...</p>
+                                </div>
+                            </div>
+                            <div class="desk-actions flex gap-2 justify-center">
+                                <div class="action-indicator bg-gray-600 rounded px-3 py-1 text-xs">
+                                    <span id="actionText">Waiting...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel - Timeline & Metrics -->
+                    <div class="timeline-area bg-gray-900 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4 text-center">Process Timeline</h3>
+                        
+                        <!-- Timeline Container -->
+                        <div id="timeline" class="timeline-container">
+                            <div class="timeline-track relative">
+                                <div class="timeline-progress bg-blue-600 h-2 rounded transition-all duration-1000" style="width: 0%"></div>
+                            </div>
+                            <div class="timeline-steps mt-4 space-y-3">
+                                <!-- Steps will be dynamically added -->
+                            </div>
+                        </div>
+
+                        <!-- Metrics Display -->
+                        <div class="metrics-display mt-6 grid grid-cols-2 gap-4">
+                            <div class="metric-card bg-gray-800 rounded p-3 text-center">
+                                <p class="text-gray-400 text-sm">Time Elapsed</p>
+                                <p id="timeElapsed" class="text-2xl font-bold text-blue-400">0:00</p>
+                            </div>
+                            <div class="metric-card bg-gray-800 rounded p-3 text-center">
+                                <p class="text-gray-400 text-sm">Steps Completed</p>
+                                <p id="stepsCompleted" class="text-2xl font-bold text-green-400">0/0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparison Results -->
+                <div id="comparisonResults" class="comparison-results mt-8 hidden">
+                    <h3 class="text-2xl font-bold text-center mb-6 text-blue-400">Results Comparison</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="result-card bg-red-900 bg-opacity-30 rounded-lg p-6 border border-red-600">
+                            <h4 class="text-xl font-bold text-red-400 mb-3">Manual Process</h4>
+                            <div class="space-y-2 text-gray-300">
+                                <p>Total Time: <span id="manualTime" class="font-bold text-red-300">--</span></p>
+                                <p>Staff Interactions: <span class="font-bold text-red-300">5+</span></p>
+                                <p>Error Risk: <span class="font-bold text-red-300">High</span></p>
+                            </div>
+                        </div>
+                        <div class="result-card bg-green-900 bg-opacity-30 rounded-lg p-6 border border-green-600">
+                            <h4 class="text-xl font-bold text-green-400 mb-3">AI-Powered Process</h4>
+                            <div class="space-y-2 text-gray-300">
+                                <p>Total Time: <span id="aiTime" class="font-bold text-green-300">--</span></p>
+                                <p>Staff Interactions: <span class="font-bold text-green-300">0</span></p>
+                                <p>Error Risk: <span class="font-bold text-green-300">Minimal</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="savings-highlight text-center mt-6 bg-blue-900 bg-opacity-30 rounded-lg p-4 border border-blue-600">
+                        <p class="text-2xl font-bold text-blue-300">
+                            Time Saved: <span id="timeSaved" class="text-3xl text-green-400">--</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -221,7 +349,7 @@
                     <h3 class="text-2xl font-bold mb-3">Core Capabilities</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <h4 class="font-bold text-lg text-blue-300">🎯 Smart Patient Recognition</h4>
+                            <h4 class="font-bold text-lg text-blue-300">👤 Smart Patient Recognition</h4>
                             <p class="text-gray-400">AI facial recognition with 99.9% accuracy, even with masks. Instantly retrieves patient history for a seamless experience.</p>
                         </div>
                         <div>
@@ -229,7 +357,7 @@
                             <p class="text-gray-400">A zero-touch entry process that integrates directly with your EMR or Google Sheets for real-time attendance tracking.</p>
                         </div>
                         <div>
-                            <h4 class="font-bold text-lg text-blue-300">📊 Intelligent Monitoring</h4>
+                            <h4 class="font-bold text-lg text-blue-300">👁 Intelligent Monitoring</h4>
                             <p class="text-gray-400">Track multiple patients simultaneously, activate personalized treatment plans, and receive automated compliance alerts.</p>
                         </div>
                         <div>
@@ -371,7 +499,10 @@
 function toggleSlideshowForTracker() {
   const slideshow = document.getElementById('slideshow-container');
   const trackerPage = document.getElementById('tracker');
-  if (trackerPage && trackerPage.classList.contains('active')) {
+  const virtualDemoPage = document.getElementById('virtual-demo');
+  
+  if ((trackerPage && trackerPage.classList.contains('active')) || 
+      (virtualDemoPage && virtualDemoPage.classList.contains('active'))) {
     slideshow.style.display = 'none';
   } else {
     slideshow.style.display = '';
@@ -388,5 +519,3 @@ window.addEventListener('DOMContentLoaded', toggleSlideshowForTracker);
 </script>
 </body>
 </html>
-
-

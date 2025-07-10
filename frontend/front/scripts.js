@@ -54,6 +54,275 @@ class CinematicSlideshow {
     }
 }
 
+// Virtual Demo Controller
+class VirtualDemoController {
+    constructor() {
+        this.isRunning = false;
+        this.currentScenario = null;
+        this.startTime = null;
+        this.timer = null;
+        this.currentStep = 0;
+        
+        this.scenarios = {
+            before: {
+                name: 'Manual Process',
+                steps: [
+                    { name: 'Patient Arrival', duration: 2000, action: 'Patient enters clinic' },
+                    { name: 'Queue Waiting', duration: 3000, action: 'Waiting in line' },
+                    { name: 'Reception Desk', duration: 4000, action: 'Manual form filling' },
+                    { name: 'ID Verification', duration: 3000, action: 'Staff checks documents' },
+                    { name: 'System Entry', duration: 4000, action: 'Data entry to system' },
+                    { name: 'Paper Filing', duration: 2000, action: 'Physical record update' },
+                    { name: 'Treatment Assignment', duration: 3000, action: 'Manual room assignment' },
+                    { name: 'Patient Direction', duration: 2000, action: 'Staff guides patient' }
+                ],
+                totalTime: 23000
+            },
+            after: {
+                name: 'AI-Powered Process',
+                steps: [
+                    { name: 'Smart Entry', duration: 500, action: 'AI detects patient' },
+                    { name: 'Instant Recognition', duration: 1000, action: 'Face ID verification' },
+                    { name: 'Auto Check-in', duration: 500, action: 'System updates instantly' },
+                    { name: 'Smart Routing', duration: 500, action: 'AI assigns optimal room' },
+                    { name: 'Patient Notification', duration: 500, action: 'Digital guidance sent' }
+                ],
+                totalTime: 3000
+            }
+        };
+        
+        this.initializeElements();
+        this.attachEventListeners();
+    }
+    
+    initializeElements() {
+        this.elements = {
+            startDemoBtn: document.getElementById('startDemoBtn'),
+            resetDemoBtn: document.getElementById('resetDemoBtn'),
+            beforeScenarioBtn: document.getElementById('beforeScenarioBtn'),
+            afterScenarioBtn: document.getElementById('afterScenarioBtn'),
+            scenarioSelector: document.querySelector('.scenario-selector'),
+            virtualPatient: document.getElementById('virtualPatient'),
+            deskDisplay: document.getElementById('deskDisplay'),
+            actionText: document.getElementById('actionText'),
+            timeline: document.getElementById('timeline'),
+            timeElapsed: document.getElementById('timeElapsed'),
+            stepsCompleted: document.getElementById('stepsCompleted'),
+            comparisonResults: document.getElementById('comparisonResults'),
+            manualTime: document.getElementById('manualTime'),
+            aiTime: document.getElementById('aiTime'),
+            timeSaved: document.getElementById('timeSaved')
+        };
+    }
+    
+    attachEventListeners() {
+        this.elements.startDemoBtn.addEventListener('click', () => this.startDemo());
+        this.elements.resetDemoBtn.addEventListener('click', () => this.resetDemo());
+        this.elements.beforeScenarioBtn.addEventListener('click', () => this.runScenario('before'));
+        this.elements.afterScenarioBtn.addEventListener('click', () => this.runScenario('after'));
+    }
+    
+    startDemo() {
+        this.elements.startDemoBtn.classList.add('hidden');
+        this.elements.resetDemoBtn.classList.remove('hidden');
+        this.elements.scenarioSelector.classList.remove('hidden');
+        this.elements.virtualPatient.classList.remove('hidden');
+        
+        // Clear any previous results
+        this.elements.comparisonResults.classList.add('hidden');
+    }
+    
+    resetDemo() {
+        this.stopScenario();
+        this.elements.startDemoBtn.classList.remove('hidden');
+        this.elements.resetDemoBtn.classList.add('hidden');
+        this.elements.scenarioSelector.classList.add('hidden');
+        this.elements.virtualPatient.classList.add('hidden');
+        this.elements.comparisonResults.classList.add('hidden');
+        
+        // Reset displays
+        this.elements.deskDisplay.innerHTML = '<p class="animate-typewriter">Reception System Ready...</p>';
+        this.elements.actionText.textContent = 'Waiting...';
+        this.clearTimeline();
+    }
+    
+    runScenario(type) {
+        if (this.isRunning) return;
+        
+        this.currentScenario = this.scenarios[type];
+        this.currentStep = 0;
+        this.isRunning = true;
+        this.startTime = Date.now();
+        
+        // Update button states
+        document.querySelectorAll('.scenario-btn').forEach(btn => btn.classList.remove('active'));
+        if (type === 'before') {
+            this.elements.beforeScenarioBtn.classList.add('active');
+        } else {
+            this.elements.afterScenarioBtn.classList.add('active');
+        }
+        
+        // Setup timeline
+        this.setupTimeline();
+        
+        // Start the scenario
+        this.processNextStep();
+        
+        // Start timer
+        this.startTimer();
+    }
+    
+    setupTimeline() {
+        const stepsContainer = this.elements.timeline.querySelector('.timeline-steps');
+        stepsContainer.innerHTML = '';
+        
+        this.currentScenario.steps.forEach((step, index) => {
+            const stepElement = document.createElement('div');
+            stepElement.className = 'timeline-step';
+            stepElement.innerHTML = `
+                <div class="flex items-center justify-between w-full">
+                    <span class="font-medium">${step.name}</span>
+                    <span class="text-sm text-gray-400">${(step.duration / 1000).toFixed(1)}s</span>
+                </div>
+            `;
+            stepElement.dataset.stepIndex = index;
+            stepsContainer.appendChild(stepElement);
+        });
+        
+        // Update steps counter
+        this.elements.stepsCompleted.textContent = `0/${this.currentScenario.steps.length}`;
+    }
+    
+    processNextStep() {
+        if (!this.isRunning || this.currentStep >= this.currentScenario.steps.length) {
+            this.completeScenario();
+            return;
+        }
+        
+        const step = this.currentScenario.steps[this.currentStep];
+        const stepElements = this.elements.timeline.querySelectorAll('.timeline-step');
+        
+        // Update timeline visual
+        stepElements.forEach((el, index) => {
+            if (index < this.currentStep) {
+                el.classList.add('completed');
+                el.classList.remove('active');
+            } else if (index === this.currentStep) {
+                el.classList.add('active');
+                el.classList.remove('completed');
+            } else {
+                el.classList.remove('completed', 'active');
+            }
+        });
+        
+        // Update displays
+        this.elements.deskDisplay.innerHTML = `<p class="text-green-400">Processing: ${step.name}</p>`;
+        this.elements.actionText.textContent = step.action;
+        
+        // Update progress
+        const progress = ((this.currentStep + 1) / this.currentScenario.steps.length) * 100;
+        this.elements.timeline.querySelector('.timeline-progress').style.width = `${progress}%`;
+        this.elements.stepsCompleted.textContent = `${this.currentStep + 1}/${this.currentScenario.steps.length}`;
+        
+        // Animate patient avatar
+        this.animatePatient();
+        
+        // Schedule next step
+        setTimeout(() => {
+            this.currentStep++;
+            this.processNextStep();
+        }, step.duration);
+    }
+    
+    animatePatient() {
+        const avatar = this.elements.virtualPatient.querySelector('svg');
+        avatar.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            avatar.style.transform = 'scale(1)';
+        }, 300);
+    }
+    
+    startTimer() {
+        this.timer = setInterval(() => {
+            if (!this.isRunning) return;
+            
+            const elapsed = Date.now() - this.startTime;
+            const minutes = Math.floor(elapsed / 60000);
+            const seconds = Math.floor((elapsed % 60000) / 1000);
+            this.elements.timeElapsed.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }, 100);
+    }
+    
+    stopScenario() {
+        this.isRunning = false;
+        if (this.timer) {
+            clearInterval(this.timer);
+            this.timer = null;
+        }
+        this.elements.timeElapsed.textContent = '0:00';
+    }
+    
+    completeScenario() {
+        this.stopScenario();
+        
+        // Mark all steps as completed
+        this.elements.timeline.querySelectorAll('.timeline-step').forEach(el => {
+            el.classList.add('completed');
+            el.classList.remove('active');
+        });
+        
+        // Update displays
+        this.elements.deskDisplay.innerHTML = '<p class="text-green-400">Process Complete!</p>';
+        this.elements.actionText.textContent = 'Completed';
+        
+        // Store completion time
+        const elapsed = Date.now() - this.startTime;
+        if (this.currentScenario === this.scenarios.before) {
+            this.manualProcessTime = elapsed;
+            this.elements.manualTime.textContent = this.formatTime(elapsed);
+        } else {
+            this.aiProcessTime = elapsed;
+            this.elements.aiTime.textContent = this.formatTime(elapsed);
+        }
+        
+        // Show comparison if both scenarios completed
+        if (this.manualProcessTime && this.aiProcessTime) {
+            this.showComparison();
+        }
+    }
+    
+    formatTime(ms) {
+        const minutes = Math.floor(ms / 60000);
+        const seconds = Math.floor((ms % 60000) / 1000);
+        return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+    
+    showComparison() {
+        this.elements.comparisonResults.classList.remove('hidden');
+        
+        const saved = this.manualProcessTime - this.aiProcessTime;
+        const savedMinutes = Math.floor(saved / 60000);
+        const savedSeconds = Math.floor((saved % 60000) / 1000);
+        
+        this.elements.timeSaved.textContent = `${savedMinutes}:${savedSeconds.toString().padStart(2, '0')}`;
+        
+        // Animate the results
+        this.elements.comparisonResults.style.opacity = '0';
+        setTimeout(() => {
+            this.elements.comparisonResults.style.opacity = '1';
+        }, 100);
+    }
+    
+    clearTimeline() {
+        this.elements.timeline.querySelector('.timeline-steps').innerHTML = '';
+        this.elements.timeline.querySelector('.timeline-progress').style.width = '0%';
+        this.elements.timeElapsed.textContent = '0:00';
+        this.elements.stepsCompleted.textContent = '0/0';
+        this.manualProcessTime = null;
+        this.aiProcessTime = null;
+    }
+}
+
 // Initialize slideshow when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     // Parallax effect on hero video section
@@ -85,12 +354,14 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', handleScroll);
     
     new CinematicSlideshow();
+    new VirtualDemoController();
 });
 
 // --- Original Page Navigation Logic ---
 const pages = document.querySelectorAll('.page');
 const navLinks = document.querySelectorAll('.nav-link');
 const getStartedBtn = document.getElementById('getStartedBtn');
+const tryDemoBtn = document.getElementById('tryDemoBtn');
 
 function showPage(pageId) {
     const slideshow = document.getElementById('slideshow-container');
@@ -105,7 +376,7 @@ function showPage(pageId) {
     });
     window.scrollTo(0, 0);
     // Toggle slideshow visibility based on tracker page
-    if (pageId === 'tracker') {
+    if (pageId === 'tracker' || pageId === 'virtual-demo') {
         slideshow.classList.add('hidden');
     } else {
         slideshow.classList.remove('hidden');
@@ -116,7 +387,8 @@ navLinks.forEach(link => {
     link.addEventListener('click', () => showPage(link.dataset.page));
 });
 
-getStartedBtn.addEventListener('click', () => showPage('tracker'));
+if (getStartedBtn) getStartedBtn.addEventListener('click', () => showPage('tracker'));
+if (tryDemoBtn) tryDemoBtn.addEventListener('click', () => showPage('virtual-demo'));
 showPage('home');
 
 // Email Support Form Navigation
