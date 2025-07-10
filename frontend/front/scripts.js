@@ -69,6 +69,21 @@ document.addEventListener('DOMContentLoaded', () => {
             hero.style.backgroundPosition = '50% 50%';
         });
     }
+    
+    // Header transparency effect on scroll
+    const header = document.querySelector('header');
+    const handleScroll = () => {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    };
+    
+    // Initial check and add scroll listener
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    
     new CinematicSlideshow();
 });
 

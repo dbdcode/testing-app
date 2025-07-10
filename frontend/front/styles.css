@@ -11,6 +11,16 @@ body {
     padding: 0.5rem 1rem;
 }
 
+/* Transparent Header Styles */
+header {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+header.scrolled {
+    background-color: rgba(17, 24, 39, 0.9) !important; /* dark gray with opacity */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
 .nav-link:hover {
     background-color: rgba(59, 130, 246, 0.1);
     transform: translateY(-1px);
