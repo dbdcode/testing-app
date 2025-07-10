@@ -19,19 +19,54 @@
         <div class="slideshow-overlay"></div>
         <div class="slideshow-wrapper">
             <div class="slideshow-slide active" data-slide="1">
-                <img src="https://images.unsplash.com/photo-1559328101-7e6b77ea5a79?w=1920&q=80" alt="">
+                <img src="https://images.unsplash.com/photo-1559328101-7e6b77ea5a79?w=800&q=80" 
+                     srcset="https://images.unsplash.com/photo-1559328101-7e6b77ea5a79?w=480&q=80 480w,
+                             https://images.unsplash.com/photo-1559328101-7e6b77ea5a79?w=800&q=80 800w,
+                             https://images.unsplash.com/photo-1559328101-7e6b77ea5a79?w=1200&q=80 1200w,
+                             https://images.unsplash.com/photo-1559328101-7e6b77ea5a79?w=1920&q=80 1920w"
+                     sizes="(max-width: 600px) 480px, (max-width: 1024px) 800px, (max-width: 1600px) 1200px, 1920px"
+                     loading="lazy"
+                     alt="Medical technology background">
             </div>
             <div class="slideshow-slide" data-slide="2">
-                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&q=80" alt="">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80" 
+                     srcset="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=480&q=80 480w,
+                             https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80 800w,
+                             https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80 1200w,
+                             https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1920&q=80 1920w"
+                     sizes="(max-width: 600px) 480px, (max-width: 1024px) 800px, (max-width: 1600px) 1200px, 1920px"
+                     loading="lazy"
+                     alt="Healthcare analytics dashboard">
             </div>
             <div class="slideshow-slide" data-slide="3">
-                <img src="https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=1920&q=80" alt="">
+                <img src="https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=800&q=80" 
+                     srcset="https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=480&q=80 480w,
+                             https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=800&q=80 800w,
+                             https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=1200&q=80 1200w,
+                             https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=1920&q=80 1920w"
+                     sizes="(max-width: 600px) 480px, (max-width: 1024px) 800px, (max-width: 1600px) 1200px, 1920px"
+                     loading="lazy"
+                     alt="Medical monitoring system">
             </div>
             <div class="slideshow-slide" data-slide="4">
-                <img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=1920&q=80" alt="">
+                <img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=800&q=80" 
+                     srcset="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=480&q=80 480w,
+                             https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=800&q=80 800w,
+                             https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=1200&q=80 1200w,
+                             https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=1920&q=80 1920w"
+                     sizes="(max-width: 600px) 480px, (max-width: 1024px) 800px, (max-width: 1600px) 1200px, 1920px"
+                     loading="lazy"
+                     alt="Healthcare professional with technology">
             </div>
             <div class="slideshow-slide" data-slide="5">
-                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1920&q=80" alt="">
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80" 
+                     srcset="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=480&q=80 480w,
+                             https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80 800w,
+                             https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200&q=80 1200w,
+                             https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1920&q=80 1920w"
+                     sizes="(max-width: 600px) 480px, (max-width: 1024px) 800px, (max-width: 1600px) 1200px, 1920px"
+                     loading="lazy"
+                     alt="Medical AI interface">
             </div>
         </div>
     </div>
@@ -40,13 +75,14 @@
     <header class="bg-gray-800 bg-opacity-90 backdrop-blur-sm shadow-lg sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-white">
-                🩺 <span class="hidden sm:inline">AI Medical Systems</span>
+                <span class="hidden sm:inline">AI Medical Systems</span>
             </div>
-            <div class="space-x-4 md:space-x-8 text-lg">
-                <button data-page="home" class="nav-link text-gray-300 hover:text-white transition duration-300 pb-1">Home</button>
-                <button data-page="about" class="nav-link text-gray-300 hover:text-white transition duration-300 pb-1">About</button>
-                <button data-page="support" class="nav-link text-gray-300 hover:text-white transition duration-300 pb-1">Support</button>
-                <button data-page="tracker" class="nav-link text-gray-300 hover:text-white transition duration-300 pb-1">Tracker</button>
+            <div class="space-x-2 md:space-x-4 text-lg">
+                <button data-page="home" class="nav-link text-gray-300">Home</button>
+                <button data-page="about" class="nav-link text-gray-300">About</button>
+                <button data-page="support" class="nav-link text-gray-300">Support</button>
+                <button data-page="demo" class="nav-link text-gray-300">Book&nbsp;a&nbsp;Demo</button>
+                <button data-page="tracker" class="nav-link text-gray-300">Tracker</button>
             </div>
         </nav>
     </header>
@@ -62,12 +98,9 @@
                 </video>
                 <div class="text-center p-8 md:p-16 max-w-4xl mx-auto relative z-10">
                     <header class="mb-8 animate-fadeInUp">
-                        <h1 class="text-4xl md:text-6xl font-black mb-2 tracking-tight text-white drop-shadow-2xl">
+                        <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight text-white drop-shadow-2xl">
                             AI-Integrated Medical Surveillance Systems
                         </h1>
-                        <h2 class="text-xl md:text-2xl font-semibold text-blue-300 mb-6 drop-shadow-lg">
-                            Transform Your Clinic with Intelligent Patient Management
-                        </h2>
                         <p class="text-lg text-gray-100 max-w-2xl mx-auto drop-shadow-md">
                             Our computer vision-based platform thinks, tracks, and manages—so your staff can focus on what truly matters: patient care.
                         </p>
@@ -205,6 +238,29 @@
                 <div class="flex justify-between items-center">
                     <button type="button" id="backToSupportBtn" class="text-gray-400 hover:text-white">← Back</button>
                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">Next →</button>
+                </div>
+            </form>
+        </div>
+        <!-- Book a Demo Page -->
+        <div id="demo" class="page p-6 md:p-12 max-w-5xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-8 text-blue-400">Book a Demo</h2>
+            <p class="text-gray-300 mb-4 text-center">Fill out the form below and our team will reach out to schedule your personalized demo.</p>
+            <form id="demoForm" class="space-y-6 max-w-xl mx-auto">
+                <div>
+                    <label for="demoFullName" class="block text-lg font-semibold text-gray-200 mb-2">Full Name</label>
+                    <input type="text" id="demoFullName" name="fullName" placeholder="Your full name" class="w-full p-3 rounded-lg bg-gray-800 text-white focus:bg-gray-700" required>
+                </div>
+                <div>
+                    <label for="demoEmail" class="block text-lg font-semibold text-gray-200 mb-2">Business Email</label>
+                    <input type="email" id="demoEmail" name="email" placeholder="you@company.com" class="w-full p-3 rounded-lg bg-gray-800 text-white focus:bg-gray-700" required>
+                </div>
+                <div>
+                    <label for="demoBusiness" class="block text-lg font-semibold text-gray-200 mb-2">Business Name</label>
+                    <input type="text" id="demoBusiness" name="businessName" placeholder="Your business name" class="w-full p-3 rounded-lg bg-gray-800 text-white focus:bg-gray-700" required>
+                </div>
+                <div class="flex justify-between items-center">
+                    <button type="button" id="backToHomeBtn" class="text-gray-400 hover:text-white">← Back</button>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">Submit</button>
                 </div>
             </form>
         </div>

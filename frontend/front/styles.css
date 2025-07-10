@@ -3,8 +3,76 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+/* Navigation Active State Indicators */
+.nav-link {
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+}
+
+.nav-link:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+    transform: translateY(-1px);
+}
+
+.nav-link.active {
+    color: #60a5fa !important;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(147, 197, 253, 0.1) 100%);
+    box-shadow: 
+        0 0 0 1px rgba(59, 130, 246, 0.3),
+        0 4px 12px rgba(59, 130, 246, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.nav-link.active::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 50%, #3b82f6 100%);
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    border-radius: 0.375rem;
+    pointer-events: none;
+}
+
+/* Enhanced hover effect for non-active links */
+.nav-link:not(.active):hover {
+    color: #93c5fd;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .nav-link {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+    }
+    
+    .nav-link.active::before {
+        height: 2px;
+        bottom: -1px;
+    }
+}
+
 /* Cinematic Slideshow Styles */
 .slideshow-container {
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
     position: fixed;
     top: 0;
     left: 0;
@@ -48,6 +116,7 @@ body {
 }
 
 .slideshow-slide.active {
+    animation: zoomSlow 20s linear infinite alternate;
     opacity: 1;
     transform: scale(1.1);
 }
@@ -114,6 +183,18 @@ body {
 main {
     position: relative;
     z-index: 1;
+}
+
+/* Slideshow hidden state */
+.slideshow-container.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+@keyframes zoomSlow {
+    from { transform: scale(1.05); }
+    to   { transform: scale(1.15); }
 }
 
 /* Responsive adjustments */

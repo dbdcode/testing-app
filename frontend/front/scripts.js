@@ -56,6 +56,19 @@ class CinematicSlideshow {
 
 // Initialize slideshow when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
+    // Parallax effect on hero video section
+    const hero = document.querySelector('.hero-section');
+    if (hero) {
+        hero.addEventListener('mousemove', (e) => {
+            const rect = hero.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            hero.style.backgroundPosition = `${50 + (x - 0.5) * 4}% ${50 + (y - 0.5) * 4}%`;
+        });
+        hero.addEventListener('mouseleave', () => {
+            hero.style.backgroundPosition = '50% 50%';
+        });
+    }
     new CinematicSlideshow();
 });
 
@@ -65,6 +78,7 @@ const navLinks = document.querySelectorAll('.nav-link');
 const getStartedBtn = document.getElementById('getStartedBtn');
 
 function showPage(pageId) {
+    const slideshow = document.getElementById('slideshow-container');
     if (document.getElementById('tracker').classList.contains('active') && pageId !== 'tracker') {
         stopTracking();
     }
@@ -75,6 +89,12 @@ function showPage(pageId) {
         link.classList.toggle('active', link.dataset.page === pageId);
     });
     window.scrollTo(0, 0);
+    // Toggle slideshow visibility based on tracker page
+    if (pageId === 'tracker') {
+        slideshow.classList.add('hidden');
+    } else {
+        slideshow.classList.remove('hidden');
+    }
 }
 
 navLinks.forEach(link => {
@@ -89,6 +109,31 @@ const emailSupportBtn = document.getElementById('emailSupportBtn');
 const backToSupportBtn = document.getElementById('backToSupportBtn');
 if (emailSupportBtn) emailSupportBtn.addEventListener('click', () => showPage('emailSupport'));
 if (backToSupportBtn) backToSupportBtn.addEventListener('click', () => showPage('support'));
+
+// --- Demo Form Navigation & Handling ---
+const backToHomeBtn = document.getElementById('backToHomeBtn');
+if (backToHomeBtn) backToHomeBtn.addEventListener('click', () => showPage('home'));
+
+const demoForm = document.getElementById('demoForm');
+if (demoForm) {
+    demoForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const fullName = document.getElementById('demoFullName').value.trim();
+        const email = document.getElementById('demoEmail').value.trim();
+        const business = document.getElementById('demoBusiness').value.trim();
+
+        if (!fullName || !email || !business) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+
+        // For now, simply log. Replace with API call / backend integration.
+        console.log('Demo Request:', { fullName, email, business });
+        alert('Thank you! Our team will reach out shortly to schedule your demo.');
+        demoForm.reset();
+        showPage('home');
+    });
+}
 
 // --- Original Tracking Logic ---
 const videoElement = document.getElementsByClassName('input_video')[0];
