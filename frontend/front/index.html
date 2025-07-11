@@ -107,9 +107,6 @@
                         </p>
                     </header>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button id="tryDemoBtn" class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-10 rounded-full text-xl transition-all transform hover:scale-105 duration-300 shadow-2xl animate-pulse-subtle">
-                            Try Virtual Demo
-                        </button>
                         <button id="getStartedBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-full text-xl transition-all transform hover:scale-105 duration-300 shadow-2xl">
                             Launch the Tracker
                         </button>
@@ -211,96 +208,8 @@
             </div>
         </div>
 
-        <!-- Virtual Demo Page -->
-        <div id="virtual-demo" class="page p-6 md:p-12 max-w-7xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-8 text-blue-400 animate-fadeInUp">Experience the Difference</h2>
-            <p class="text-center text-gray-300 mb-8 text-lg">Try our interactive demo to see how AI transforms patient check-in</p>
-            
-            <!-- Demo Container -->
-            <div class="demo-container bg-gray-800 rounded-2xl p-8 shadow-2xl">
-                <!-- Demo Controls -->
-                <div class="demo-controls mb-8 text-center">
-                    <button id="startDemoBtn" class="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-all transform hover:scale-105 duration-300 shadow-lg">
-                        Start Demo Experience
-                    </button>
-                    <button id="resetDemoBtn" class="ml-4 bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 hidden">
-                        Reset Demo
-                    </button>
-                </div>
 
-                <!-- Scenario Selector -->
-                <div class="scenario-selector mb-8 hidden">
-                    <div class="flex justify-center gap-4">
-                        <button id="beforeScenarioBtn" class="scenario-btn bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-300">
-                            Manual Process (Before)
-                        </button>
-                        <button id="afterScenarioBtn" class="scenario-btn bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition-all duration-300">
-                            AI-Powered (After)
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Demo Visualization Area -->
-                <div class="demo-visualization grid md:grid-cols-2 gap-8">
-                    <!-- Left Panel - Virtual Reception -->
-                    <div class="reception-area bg-gray-900 rounded-lg p-6 relative overflow-hidden">
-                        <h3 class="text-xl font-bold mb-4 text-center">Virtual Reception</h3>
-                        
-                        <!-- Virtual Patient -->
-                        <div id="virtualPatient" class="virtual-patient hidden">
-                            <div class="patient-avatar mx-auto mb-4">
-                                <svg width="120" height="120" viewBox="0 0 120 120" class="mx-auto">
-                                    <circle cx="60" cy="60" r="50" fill="#4B5563"/>
-                                    <circle cx="60" cy="45" r="20" fill="#9CA3AF"/>
-                                    <path d="M 30 85 Q 60 70 90 85" fill="#9CA3AF"/>
-                                    <circle cx="45" cy="45" r="3" fill="#1F2937"/>
-                                    <circle cx="75" cy="45" r="3" fill="#1F2937"/>
-                                    <path d="M 50 60 Q 60 65 70 60" stroke="#1F2937" stroke-width="2" fill="none"/>
-                                </svg>
-                                <p class="text-center mt-2 text-gray-400">Patient: John Doe</p>
-                            </div>
-                        </div>
-
-                        <!-- Reception Desk -->
-                        <div class="reception-desk bg-gray-800 rounded p-4 mt-4">
-                            <div class="desk-screen bg-gray-700 rounded p-2 mb-2 h-32 relative">
-                                <div id="deskDisplay" class="text-sm text-gray-300 p-2">
-                                    <p class="animate-typewriter">Reception System Ready...</p>
-                                </div>
-                            </div>
-                            <div class="desk-actions flex gap-2 justify-center">
-                                <div class="action-indicator bg-gray-600 rounded px-3 py-1 text-xs">
-                                    <span id="actionText">Waiting...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Panel - Timeline & Metrics -->
-                    <div class="timeline-area bg-gray-900 rounded-lg p-6">
-                        <h3 class="text-xl font-bold mb-4 text-center">Process Timeline</h3>
-                        
-                        <!-- Timeline Container -->
-                        <div id="timeline" class="timeline-container">
-                            <div class="timeline-track relative">
-                                <div class="timeline-progress bg-blue-600 h-2 rounded transition-all duration-1000" style="width: 0%"></div>
-                            </div>
-                            <div class="timeline-steps mt-4 space-y-3">
-                                <!-- Steps will be dynamically added -->
-                            </div>
-                        </div>
-
-                        <!-- Metrics Display -->
-                        <div class="metrics-display mt-6 grid grid-cols-2 gap-4">
-                            <div class="metric-card bg-gray-800 rounded p-3 text-center">
-                                <p class="text-gray-400 text-sm">Time Elapsed</p>
-                                <p id="timeElapsed" class="text-2xl font-bold text-blue-400">0:00</p>
-                            </div>
-                            <div class="metric-card bg-gray-800 rounded p-3 text-center">
-                                <p class="text-gray-400 text-sm">Steps Completed</p>
-                                <p id="stepsCompleted" class="text-2xl font-bold text-green-400">0/0</p>
-                            </div>
-                        </div>
+                        <!-- Metrics Display Removed: Time Elapsed and Steps Completed cards deleted -->
                     </div>
                 </div>
 

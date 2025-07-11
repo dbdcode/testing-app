@@ -54,7 +54,7 @@ class CinematicSlideshow {
     }
 }
 
-// Virtual Demo Controller
+// Virtual Demo Controller removed
 class VirtualDemoController {
     constructor() {
         this.isRunning = false;
@@ -354,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', handleScroll);
     
     new CinematicSlideshow();
-    new VirtualDemoController();
+    
 });
 
 // --- Original Page Navigation Logic ---
@@ -376,7 +376,7 @@ function showPage(pageId) {
     });
     window.scrollTo(0, 0);
     // Toggle slideshow visibility based on tracker page
-    if (pageId === 'tracker' || pageId === 'virtual-demo') {
+    if (pageId === 'tracker') {
         slideshow.classList.add('hidden');
     } else {
         slideshow.classList.remove('hidden');
@@ -388,7 +388,7 @@ navLinks.forEach(link => {
 });
 
 if (getStartedBtn) getStartedBtn.addEventListener('click', () => showPage('tracker'));
-if (tryDemoBtn) tryDemoBtn.addEventListener('click', () => showPage('virtual-demo'));
+
 showPage('home');
 
 // Email Support Form Navigation
