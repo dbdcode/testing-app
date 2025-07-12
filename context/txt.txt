@@ -95,3 +95,29 @@ Join the future of healthcare
 This presentational layout uses visual hierarchy, formatting, and structured sections to make the content more engaging and easier to present. The design emphasizes benefits, uses comparison tables, and includes clear calls-to-action throughout.
 
 I want the Camera motion app to be sent to the paid customer. I also want a different ui than the Company website. So 3 folders, website, tasks ui for the paid user, and the camera surveillance system. 
+
+preferred tech stack 
+ai-medical-surveillance/
+├── website/                    # Public marketing site
+│   ├── index.html              # HTML structure
+│   ├── styles.css              # TailwindCSS for styling
+│   ├── scripts.js              # JavaScript for interactivity
+│   └── assets/                 # Images, videos, etc.
+│
+├── tasks-dashboard/            # Paid customer admin UI
+│   ├── src/
+│   │   ├── components/         # React components (TaskCreator, Analytics, etc.)
+│   │   ├── pages/              # Dashboard pages (Dashboard.jsx, Patients.jsx)
+│   │   ├── utils/              # Helper functions (googleSheetsAPI.js, etc.)
+│   ├── package.json            # Dependencies
+│   └── README.md
+│
+└── camera-surveillance/        # AI-powered camera system
+    ├── src/
+    │   ├── core/               # AI logic (poseDetection.js, taskValidator.js)
+    │   ├── ui/                 # UI components (PatientView.jsx, StaffMonitor.jsx)
+    │   ├── config/             # Configuration files (clinic-settings.json)
+    │   └── services/           # Integration services (cameraService.js, syncService.js)
+    ├── electron-main.js        # Electron app entry point
+    ├── package.json            # Dependencies
+    └── installer-scripts/      # Scripts for creating installers
