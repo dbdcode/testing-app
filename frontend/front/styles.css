@@ -1,18 +1,44 @@
-/* Existing styles */
+/* Footer Styles */
+footer {
+    background-color: #111827; /* bg-gray-900 from Tailwind */
+    position: relative;
+    z-index: 10;
+}
+
+/* Base styles */
 html, body {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     overflow-x: hidden;
+    scrollbar-width: auto;
+    scrollbar-color: #4b5563 #111827;
+}
+
+/* Custom scrollbar for Webkit browsers */
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #111827;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #4b5563;
+    border-radius: 6px;
+    border: 3px solid #111827;
 }
 
 body {
     font-family: 'Inter', sans-serif;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    min-height: 100vh;
+    background-color: #111827;
+    overflow-y: scroll;
 }
 
 /* Navigation Active State Indicators */
@@ -215,12 +241,42 @@ body[data-current-page="demo"] .slideshow-container {
 main {
     flex: 1 0 auto;
     width: 100%;
-}
-
-/* Make main content appear above slideshow */
-main {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
     position: relative;
     z-index: 1;
+    overflow-x: hidden;
+}
+
+/* Ensure full viewport height for pages */
+.page {
+    min-height: calc(100vh - 120px); /* Adjust based on header/footer height */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Remove any potential sidebar */
+aside, .sidebar {
+    display: none !important;
+}
+
+/* Ensure content containers take full width */
+.container, .container-fluid, .mx-auto {
+    max-width: 100% !important;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Full width sections */
+section, .section {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 /* Slideshow hidden state */
