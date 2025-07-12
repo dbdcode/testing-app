@@ -96,6 +96,8 @@ const navLinks = document.querySelectorAll('.nav-link');
 
 function showPage(pageId) {
     const slideshow = document.getElementById('slideshow-container');
+    document.body.setAttribute('data-current-page', pageId);
+    
     if (document.getElementById('tracker').classList.contains('active') && pageId !== 'tracker') {
         stopTracking();
     }

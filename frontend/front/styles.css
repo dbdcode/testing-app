@@ -79,6 +79,16 @@ header.scrolled {
     box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
 }
 
+/* Demo Page Specific Styles */
+#demo {
+    background-color: #111827; /* Matches bg-gray-900 from Tailwind */
+}
+
+/* Hide slideshow on demo page */
+body[data-current-page="demo"] .slideshow-container {
+    display: none;
+}
+
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
     .nav-link {
