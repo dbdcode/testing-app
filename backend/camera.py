@@ -9,12 +9,11 @@ specifically designed for clinics to monitor patient tasks and compliance.
 
 import cv2
 import mediapipe as mp
-import numpy as np
 from datetime import datetime
 
 
 class HumanMotionDetector:
-    def __init__(self, motion_threshold: float = 30.0, processing_scale: float = 0.6):
+    def __init__(self, processing_scale: float = 0.6):
         """Initialize the motion detection system."""
         # Clamp processing scale to avoid invalid resize factors
         self.processing_scale = min(max(processing_scale, 0.2), 1.0)
@@ -47,34 +46,12 @@ class HumanMotionDetector:
             min_detection_confidence=0.6,
         )
 
-        # Motion tracking variables
-        self.motion_threshold = motion_threshold
+        # Tracking variables
         self.person_detected = False
-        self.motion_detected = False
-        self.previous_landmarks = None
         self.frame_count = 0
 
-    def calculate_motion_intensity(self, current_landmarks, previous_landmarks) -> float:
-        """Calculate motion intensity between current and previous pose landmarks."""
-        if previous_landmarks is None:
-            return 0.0
-
-        motion_sum = 0.0
-        landmark_count = 0
-
-        for curr_landmark, prev_landmark in zip(current_landmarks, previous_landmarks):
-            if curr_landmark.visibility > 0.5 and prev_landmark.visibility > 0.5:
-                distance = np.sqrt(
-                    (curr_landmark.x - prev_landmark.x) ** 2
-                    + (curr_landmark.y - prev_landmark.y) ** 2
-                )
-                motion_sum += distance
-                landmark_count += 1
-
-        return (motion_sum / landmark_count * 100) if landmark_count else 0.0
-
     def process_frame(self, frame):
-        """Process a single frame for human detection and motion analysis."""
+        """Process a single frame for human detection."""
         self.frame_count += 1
 
         if self.processing_scale < 1.0:
@@ -96,7 +73,6 @@ class HumanMotionDetector:
         face_results = self.face_detection.process(rgb_frame)
 
         person_in_frame = False
-        motion_intensity = 0.0
 
         if face_results.detections:
             person_in_frame = True
@@ -112,16 +88,6 @@ class HumanMotionDetector:
                 landmark_drawing_spec=self.mp_drawing_styles.get_default_pose_landmarks_style(),
             )
 
-            current_landmarks = pose_results.pose_landmarks.landmark
-            motion_intensity = self.calculate_motion_intensity(
-                current_landmarks, self.previous_landmarks
-            )
-            self.previous_landmarks = current_landmarks
-            self.motion_detected = motion_intensity > self.motion_threshold
-        else:
-            self.motion_detected = False
-            self.previous_landmarks = None
-
         if hand_results.multi_hand_landmarks:
             for hand_landmarks in hand_results.multi_hand_landmarks:
                 self.mp_drawing.draw_landmarks(
@@ -133,12 +99,12 @@ class HumanMotionDetector:
                 )
 
         self.person_detected = person_in_frame
-        self.add_info_overlay(frame, motion_intensity, person_in_frame)
+        self.add_info_overlay(frame, person_in_frame)
 
         return frame
 
-    def add_info_overlay(self, frame, motion_intensity: float, person_detected: bool):
-        """Add information overlay to the frame."""
+    def add_info_overlay(self, frame, person_detected: bool):
+        """Add detection status overlay to the frame."""
         status_color = (0, 255, 0) if person_detected else (0, 0, 255)
         cv2.putText(
             frame,
@@ -150,21 +116,11 @@ class HumanMotionDetector:
             2,
         )
 
-        cv2.putText(
-            frame,
-            f"Motion Intensity: {motion_intensity:.2f}",
-            (10, 60),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.6,
-            (255, 255, 255),
-            2,
-        )
-
         if self.processing_scale < 1.0:
             cv2.putText(
                 frame,
                 f"Processing Scale: {self.processing_scale:.2f}",
-                (10, 90),
+                (10, 60),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 0.5,
                 (200, 200, 200),
